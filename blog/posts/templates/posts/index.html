@@ -6,36 +6,17 @@
 
 
 {% block body %}
-<div id="posts-and-menu">
-    <div id="post-class-menu">
-      <!-- 各類別篩選列 -->
+<div class="container" style="max-width: 90%;">
+  <div class='row g-2'>
+    <div class="container" style=" background-color: #D26900;">
+      <h2 class="text-center d-flex justify-content-center align-items-center bg-transparent" style="margin-top: 10px;">當前熱門話題</h2>
     </div>
-    <div id="post-select">
-      <!-- 依照熱門或最新分類po文 選單跟post -->
-      <ul>
-        <!-- 篩選的選單 -->
-        {% for selectclass in classification %}
-          <li><a href="{% url 'classlist' %}?classification={{ selectclass.1 }} ">{{ selectclass.1 }}</a></li>
-        {% endfor %}
-      </ul>
-      <div>
-        <!-- 依照所選的項目跳出相應的posts -->
-          {% for post in postlist_viewercount %}
-          <div class="card" style="width: 18rem;">
-            <img src="{{ post.image.url }}" class="card-img-top" alt="image">
-            <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
-              <p class="card-text">
-                {{ post.context }}
-              </p>
-              <a href="{% url 'post-detail' user_id=post.poster.id slug=post.slug %}" class="btn btn-primary">查看更多</a>
-              <a>
-                {{ post.post_time|date:"Y" }}-{{ post.post_time|date:"m" }}-{{ post.post_time|date:"d" }}
-              </a>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
+    <div class="col-sm-8">
+        {% include 'include_block/post-list.html' with page_obj=postlist_viewercount %}
     </div>
+    <div class="col-sm-4">
+      {% include 'include_block/select_list_block.html' with classification=classification %}
+    </div>
+  </div>
 </div>
 {% endblock %}

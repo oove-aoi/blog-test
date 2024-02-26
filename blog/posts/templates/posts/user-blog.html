@@ -5,19 +5,7 @@
 {% endblock %}
 
 {% block body %}
-{% for post in posts %}
-    <div class="card" style="width: 18rem;">
-      <img src="{{ post.image.url }}" class="card-img-top" alt="image">
-      <div class="card-body">
-        <h5 class="card-title">{{ post.title }}</h5>
-        <p class="card-text">
-        	{{ post.context }}
-        </p>
-        <a href="{% url 'post-detail' user_id=post.poster.id slug=post.slug %}" class="btn btn-primary">查看更多</a>
-        <a>
-          {{ post.post_time|date:"Y" }}-{{ post.post_time|date:"m" }}-{{ post.post_time|date:"d" }}
-        </a>
-      </div>
-    </div>
-{% endfor %}
+<div id="post-list">
+  {% include 'include_block/post-list.html' with page_obj=posts %}
+</div>
 {% endblock %}

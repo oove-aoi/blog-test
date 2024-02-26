@@ -14,60 +14,7 @@
 
   </head>
   <body>
-    <!-- 主導覽列 -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'index' %}">魚家網</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          {% if user.is_authenticated %}
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'user-blog' user_id=user.id %}">Your blog</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'post-create' %}">Post Something</a>
-            </li>
-          
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-          {% else %}
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">尚未登入，請先登入</a>
-              </li>
-            </ul>
-          {% endif %}
-
-          <div>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">User: {{ user.get_username }}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url "logout" %}">登出</a>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url "login" %}">登入</a>
-            </li>
-          
-          {% endif %}
-          </ul>
-          </div>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-    </nav>
+    {% include 'Navigation_bar.html' %}
 
     {% block body %}
     {% endblock %}

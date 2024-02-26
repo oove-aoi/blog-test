@@ -1,0 +1,25 @@
+<div class="container border border-primary rounded p-3" style="background-color: #D0D0D0;">
+    <div class="row">
+        <div class="col offset-md-0">
+            <div class="row row-cols-2 row-cols-md-3 g-4">
+                {% for post in page_obj %}
+                    <div class="col">
+                        <div class="card h-100" style="width: 18rem;">
+                            <img src="{{ post.image.url }}" class="card-img-top" style="width: 200px; height: auto;" alt="image">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }} 作者: {{ post.poster }}</h5>
+                                <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    {{ post.context }}
+                                </p>
+                                <a href="{% url 'post-detail' user_id=post.poster.id slug=post.slug %}" class="btn btn-primary">查看更多</a>
+                                <a>
+                                    {{ post.post_time|date:"Y" }}-{{ post.post_time|date:"m" }}-{{ post.post_time|date:"d" }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,4 +6,24 @@
 
 
 {% block body %}
+{% if error_message != '' %}
+	<h2 >{{ error_message }}</h2>
+{% else %}
+<div>
+	<h2>{{ selected_classification }}</h2>
+	<div class='row g-2'>
+  		<div class="col-sm-7">
+		<!-- 顯示相關分類的列表頁 -->
+		{% include 'include_block/post-list.html' with page_obj=page_obj %}
+		</div>
+		<div class="col">
+	    	{% include 'include_block/select_list_block.html' with classification=classification %}
+	  	</div>
+	</div>
+	
+	<div class="row">
+		{% include 'include_block/page-select.html' with selected_classification=selected_classification %}
+	</div>
+</div>
+{% endif %}
 {% endblock %}

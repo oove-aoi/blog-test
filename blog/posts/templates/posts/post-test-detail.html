@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    
+    <div class="row align-items-center">
+        <div class="col">
+            <h1>Title: {{ post.title }}</h1>
+        </div>
+        <div class="col align-self-end">
+            <p>Poster: {{ post.poster }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+            
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid mb-3">
+        <p>{{ post.context }}</p>
+    </div>
+    <div class="col-md-4">
+        <div class="text-start">
+            <p>Post time: {{ post.post_time }}</p>
+            <p>View count: {{ viewer_count }}</p>
+            <p>分類: {{ post.get_classification_display }}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

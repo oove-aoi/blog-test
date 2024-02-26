@@ -1,13 +1,13 @@
+from urllib.parse import unquote
+from datetime import datetime
+
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from ipware import get_client_ip
-
 from django.db.models import Count
-
-from datetime import datetime
-
 
 from .forms import CustomUserCreationForm, PostCreationForm, PostUpdateForm, CommentCreationForm
 from .models import IpAddress, Post, Comment
@@ -27,11 +27,32 @@ def index(request):
 	})
 
 def classlist(request):
-	selected_classification = request.GET.get("classification", None)
+	selected_classification_encoded = request.GET.get("classification", None)
+	selected_classification = unquote(selected_classification_encoded)
+	error_message = ''
+	selected_classification_value = None
+	classification = Post.post_class
+	
+	for value, label in Post.post_class:
+		if label == selected_classification:
+			selected_classification_value = value
+			break
 
+	else:
+		error_message = "無此分類，請確認你的分類正確"
+
+	#依照分頁數篩選出想要顯示的帖子
+	class_list = Post.objects.filter(classification=selected_classification_value).order_by("-post_time")
+	paginator = Paginator(class_list, 5)
+	page_number = request.GET.get("page", 1)
+	page_obj = paginator.get_page(page_number)
 
 	return render(request, 'posts/classification_list_page.html', {
+		"classification": classification,
 		"selected_classification": selected_classification,
+		"error_message": error_message,
+		"page_number": page_number,
+		"page_obj": page_obj
 	})
 
 
@@ -76,7 +97,7 @@ def createpost(request):
 		if IpAddress.objects.filter(ip=posterip).exists():
 			form.instance.posterip = IpAddress.objects.get(ip=posterip)
 		else:
-			new_ip = IpAddress.objects.get_or_create(ip=ip)
+			new_ip = IpAddress.objects.get_or_create(ip=posterip)
 			form.instance.posterip = IpAddress.objects.get(ip=posterip)
 
 		if form.is_valid():

@@ -76,13 +76,29 @@ WSGI_APPLICATION = "blog.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+#嘗試換成postgresql，失敗，
+#首先遇到無法遷移，datetimefield時間戳問題，然後硬幹後發現根本無法登入使用
+#不知為何解決了，怪
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "blog",
+        "USER": "postgres",
+        "PASSWORD": "postgresql",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}
 
+"""
+#原本的資料庫設定
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+"""
 
 
 # Password validation

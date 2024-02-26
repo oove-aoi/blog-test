@@ -4,15 +4,22 @@
 {% endblock %}
 
 {% block body %}
-<h2>{{ title }}</h2>
-<form method="POST" enctype="multipart/form-data">
-{% csrf_token %}
-<table>
-	<tr>
-		<td>{{ form }}</td>
-	</tr>
-</table>
-<button type="submit">提交</button>
-<input type="hidden" name="next" value="{{ next }}">
-</form>
+<div class="container d-flex justify-content-center">
+	<form class="border border-primary p-4" style="background-color: #BBFFBB;" method="POST" enctype="multipart/form-data">
+
+		<h2 class="text-center">{{ title }}</h2>
+		{% csrf_token %}
+
+		<table class="table">
+			<div class="mb-3">{{ form }}</div>
+		</table>
+
+		<div class="text-center">
+        	<button class="btn btn-primary" type="submit">提交</button>
+    	</div>
+		<input  type="hidden" name="next" value="{{ next }}">
+
+	</form>
+</div>
 {% endblock %}
+
