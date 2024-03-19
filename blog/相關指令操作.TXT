@@ -1,0 +1,10 @@
+將所有相依項輸出
+pip freeze > requirements.txt
+建立虛擬環境
+python -m venv venv
+
+啟動虛擬環境
+venv\Scripts\activate
+
+在pythonanywhere啟動虛擬環境
+source myproject/bin/activate

@@ -33,20 +33,29 @@
               <a class="nav-link active" aria-current="page" href="#">User: {{ user.get_username }}</a>
             </li>
             <li class="nav-item">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">logout</button>
+            </form>
+            </li>
+            <!-- 
+            <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url "logout" %}">登出</a>
             </li>
+            -->
+
           {% else %}
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url "login" %}">登入</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url "register" %}">註冊</a>
             </li>
           
           {% endif %}
           </ul>
           </div>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          
         </div>
       </div>
     </nav>

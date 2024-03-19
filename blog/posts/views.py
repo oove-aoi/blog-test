@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from ipware import get_client_ip
+from python_ipware  import IpWare
 from django.db.models import Count
 
 from .forms import CustomUserCreationForm, PostCreationForm, PostUpdateForm, CommentCreationForm
@@ -74,8 +74,6 @@ def register(request):
 		'form': form
 	})
 
-
-
 def userblog(request, user_id):
 	blog_owner = get_object_or_404(User, id=user_id)
 	blog_post = Post.objects.filter(poster__id=user_id).order_by("-post_time")
@@ -85,6 +83,13 @@ def userblog(request, user_id):
 		"posts": blog_post
 	})
 
+#djanog5logoutview已被棄用
+'''
+@login_required
+def user_logout(request):
+	logout(request)
+	return render(request, 'registration/logged_out.html', {})
+'''
 #post相關
 
 @login_required
@@ -93,12 +98,16 @@ def createpost(request):
 		form = PostCreationForm(request.POST, request.FILES)
 		form.instance.poster = request.user
 
-		posterip, _ = get_client_ip(request)
-		if IpAddress.objects.filter(ip=posterip).exists():
-			form.instance.posterip = IpAddress.objects.get(ip=posterip)
+		ipw = IpWare()
+		meta = request.META
+		posterip, _ = ipw.get_client_ip(meta)
+		posterip_str = str(posterip)
+
+		if IpAddress.objects.filter(ip=posterip_str).exists():
+			form.instance.posterip = IpAddress.objects.get(ip=posterip_str)
 		else:
-			new_ip = IpAddress.objects.get_or_create(ip=posterip)
-			form.instance.posterip = IpAddress.objects.get(ip=posterip)
+			new_ip = IpAddress.objects.get_or_create(ip=posterip_str)
+			form.instance.posterip = IpAddress.objects.get(ip=posterip_str)
 
 		if form.is_valid():
 			post = form.save()
@@ -131,16 +140,20 @@ def postdetail(request, user_id, slug):
 
 		#獲取IP，並判斷是否已經看過這個帖子並依此來決定是否增加觀看數
 		#主要參考:https://dev.to/siumhossain/unique-view-count-in-specific-objectview-django-rest-framework-27be
-		ip, _ = get_client_ip(request)
+		ipw = IpWare()
+		meta = request.META
+		ip, _ = ipw.get_client_ip(meta)
+		ip_str = str(ip)
 
-		if IpAddress.objects.filter(ip=ip).exists():
-			if str(select_post.posterip) != str(ip):
-				select_post.viewersip.add(IpAddress.objects.get(ip=ip))
+		if IpAddress.objects.filter(ip=ip_str).exists():
+			if select_post.posterip != ip_str:
+				select_post.viewersip.add(IpAddress.objects.get(ip=ip_str))
 			
-
 		else:
-			new_ip = IpAddress.objects.get_or_create(ip=ip)
-			select_post.viewersip.add(new_ip)
+			new_ip, created = IpAddress.objects.get_or_create(ip=ip_str)
+			if created:
+				select_post.viewersip.add(new_ip)
+
 
 	return render(request,'posts/post-detail.html',{
 		"post": select_post,

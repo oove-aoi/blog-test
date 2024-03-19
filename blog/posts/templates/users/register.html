@@ -4,19 +4,43 @@
 {% block title %}註冊{% endblock %}
 
 {% block css_style %}
-<link rel="stylesheet" type="text/css" href="{% static 'posts/styles/styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'posts/styles.css' %}">
 {% endblock %}
 
 {% block body %}
-<h2>註冊</h2>
-<form method="post">
-    {% csrf_token %}
-    <p>請輸入你的用戶名稱: {{ form.username }}</p>
-    <p>請輸入你的信箱地址: {{ form.email }}</p>
-    <p>請輸入你的密碼: {{ form.password1 }}</p> 
-    <p>請再次輸入你的密碼: {{ form.password2 }}</p>
-    
-    <button type="submit">提交</button>
-</form>
+
+
+<div class="container d-flex justify-content-center">
+    <div class='row g-2'>
+        <div class="container" style=" background-color: #D26900;">
+          <h2 class="text-center d-flex justify-content-center align-items-center bg-transparent" style="margin-top: 10px;">註冊</h2>
+        </div>
+        
+        <form class="border border-primary p-4" style="background-color: #BBFFBB;" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+                    <th>請輸入你的用戶名稱:</th>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <th>請輸入你的信箱地址:</th>
+                    <td>{{ form.email }}</td>
+                </tr>
+                <tr>
+                    <th>請輸入你的密碼:</th>
+                    <td>{{ form.password1 }}</td>
+                </tr>
+                <tr>
+                    <th>請再次輸入你的密碼:</th>
+                    <td>{{ form.password2 }}</td>
+                </tr>
+            </table>
+            <div class="text-center">
+                <button class="btn btn-primary" type="submit">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

@@ -11,22 +11,25 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from os.path import join
+#from os.path import join
+import os 
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv( BASE_DIR / 'mysql_env/.env' )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-xw#ws=k1n2)z_b+_@da^mcu@s68@akws2c2d6yj%+sgx_$$8m6"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "*" ]
 
 
 # Application definition
@@ -75,6 +78,22 @@ WSGI_APPLICATION = "blog.wsgi.application"
 
 
 # Database
+# 現在換成mysql
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "blog",
+        "USER": os.getenv('DB_USER'),
+        "PASSWORD": os.getenv('DB_PASSWORD'),
+        "HOST": "localhost",
+        "PORT": "330",
+    }
+}
+
+
+
+"""
+# Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 #嘗試換成postgresql，失敗，
 #首先遇到無法遷移，datetimefield時間戳問題，然後硬幹後發現根本無法登入使用
@@ -83,14 +102,14 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "blog",
-        "USER": "postgres",
-        "PASSWORD": "postgresql",
+        "USER": os.getenv('DB_USER'),
+        "PASSWORD": os.getenv('DB_PASSWORD'),
         "HOST": "localhost",
         "PORT": "5432",
     }
 }
 
-"""
+
 #原本的資料庫設定
 DATABASES = {
     "default": {
