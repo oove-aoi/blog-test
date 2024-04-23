@@ -19,7 +19,7 @@
   
 ## 內容說明
 1. Posts package
-   * models.py: 定義了IpAddress、Post、Comment 三個資料表，並使用 django.contrib.auth.models 模組內的 User Model 來實現用戶註冊登入等相關操作。
+   * models.py: 定義了IpAddress、Post、Comment 三個資料表，並使用 django.contrib.auth.models 模組內的 User Model 來創建用戶資料表。
      - Post 內有兩種類型的欄位跟一個方法:
        + 貼文基本欄位(title、poster、image、context、post_time、slug、classification)，其中 poster 跟 User為多對一關係。
        + 與IP相關的欄位(posterip跟viewersip)。
@@ -40,19 +40,19 @@
      - blog/{User ID} : 以用戶Id為查詢參數之一，並附有數個子路徑可以連到貼文、更新刪除貼文或使用者的部落格。
        
    *  Views.py: 定義了數個函數處理請求
-     + 檢視相關的頁面:
-       - index: 首頁，會將五個瀏覽數最大的貼文顯示在首頁中。
-       - classlist: 分類顯示頁，可依照所選的分類來檢視相關分類的文章，並使用 Django paginator 實現分頁閱讀功能。
-     + 與用戶相關的頁面:
-       - register: 處理註冊邏輯。
-       - userblog: 使用 user id 查找該用戶跟他發過的貼文(依時間近排到遠)
-     + 與貼文相關的頁面:
-       - createpost: 處理創建貼文的邏輯，並使用 IpWare 抓取發文者IP。
-       - postdetail: 使用 user id 跟 slug 查找相關貼文以及跟該貼文下的留言
-         另外，當該網址使用POST method時會處理留言提交，
-         並且會透過IP數據處理觀看數
+      + 檢視相關的頁面:
+        - index: 首頁，會將五個瀏覽數最大的貼文顯示在首頁中。
+        - classlist: 分類顯示頁，可依照所選的分類來檢視相關分類的文章，並使用 Django paginator 實現分頁閱讀功能。
+      + 與用戶相關的頁面:
+        - register: 處理註冊邏輯。
+        - userblog: 使用 user id 查找該用戶跟他發過的貼文(依時間近排到遠)
+      + 與貼文相關的頁面:
+        - createpost: 處理創建貼文的邏輯，並使用 IpWare 抓取發文者IP。
+        - postdetail: 使用 user id 跟 slug 查找相關貼文以及跟該貼文下的留言
+          另外，當該網址使用POST method時會處理留言提交，
+          並且會透過IP數據處理觀看數
 
-       - updatepost & deletepost: 處理文章更新與刪除邏輯
+        - updatepost & deletepost: 處理文章更新與刪除邏輯
          
 2. 顯示頁面
    建立Base.html當作基本外型架構，並使用 Bootstrap5 所提供的 Navigation_bar.html 來當作導覽列。
