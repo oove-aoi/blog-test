@@ -27,7 +27,7 @@
 專案內容說明
   + Posts 模組 (package)
     1. models.py
-    定義三個資料表：IpAddress、Post、Comment，並使用 django.contrib.auth.models.User 作為用戶資料表。
+  定義三個資料表：IpAddress、Post、Comment，並使用 django.contrib.auth.models.User 作為用戶資料表。
     - Post 模型
       + 貼文基本欄位：title、poster、image、context、post_time、slug、classification
         - 其中 poster 與 User 為多對一關係。
