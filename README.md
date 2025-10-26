@@ -62,22 +62,23 @@
       | createposts/ | 建立貼文 |
       | blog/{User ID} | 使用者個人部落格頁面，可進一步操作貼文 CRUD |
   
-  4. views.py  
-      包含多個負責頁面邏輯的處理函式。
-      - 檢視類頁面
-        - index：顯示瀏覽數前五名的熱門貼文
-        - classlist：依分類顯示文章列表，並使用 Django Paginator 實現分頁
-      
-      - 用戶類頁面
-        - register：處理註冊流程
-        - userblog：顯示特定使用者的文章（依時間排序）
-      
-      - 貼文類頁面
-        - createpost：處理貼文建立邏輯，並利用 IpWare 擷取發文者 IP
-        - postdetail：根據 user id 與 slug 顯示貼文與留言內容
-          - 若為 POST 請求，則處理留言新增
-          - 並根據 IP 資料更新瀏覽統計
-        - updatepost / deletepost：處理貼文的更新與刪除       
+      4. views.py  
+         包含多個負責頁面邏輯的處理函式。
+          - 檢視類頁面
+            - index：顯示瀏覽數前五名的熱門貼文
+            - classlist：依分類顯示文章列表，並使用 Django Paginator 實現分頁
+          
+          - 用戶類頁面
+            - register：處理註冊流程
+            - userblog：顯示特定使用者的文章（依時間排序）
+          
+          - 貼文類頁面
+            - createpost：處理貼文建立邏輯，並利用 IpWare 擷取發文者 IP
+            - postdetail：根據 user id 與 slug 顯示貼文與留言內容
+              - 若為 POST 請求，則處理留言新增
+              - 並根據 IP 資料更新瀏覽統計
+            - updatepost / deletepost：處理貼文的更新與刪除
+                     
  + 頁面設計 (Templates)
    + 使用 Base.html 作為網站的基本框架
    + 導覽列引用 Bootstrap 5 的 Navigation_bar.html
