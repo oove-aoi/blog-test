@@ -43,15 +43,15 @@
   2. forms.py
   定義四個表單類別，用於處理不同功能的輸入資料。
   - CustomUserCreationForm
-   - 處理使用者註冊，繼承自 UserCreationForm
-   - 透過繼承與 metaclass，額外加入 Email 欄位（原始 UserCreationForm 無此欄位）
+    - 處理使用者註冊，繼承自 UserCreationForm
+    - 透過繼承與 metaclass，額外加入 Email 欄位（原始 UserCreationForm 無此欄位）
   - PostCreationForm / PostUpdateForm
-   - 分別用於新增與更新貼文
-   - 均繼承自 forms.ModelForm，並以 metaclass 與 Post 模型連結
+    - 分別用於新增與更新貼文
+    - 均繼承自 forms.ModelForm，並以 metaclass 與 Post 模型連結
   - CommentCreationForm
-   - 用於新增留言
-   - 同樣繼承自 forms.ModelForm 並與 Comment 模型連結
-   - 
+    - 用於新增留言
+    - 同樣繼承自 forms.ModelForm 並與 Comment 模型連結
+    
   3. urls.py
   定義網站主要的 URL 結構，對應到各個 views.py 中的邏輯。
   
@@ -65,25 +65,25 @@
   3. views.py
   包含多個負責頁面邏輯的處理函式。
   - 檢視類頁面
-   - index：顯示瀏覽數前五名的熱門貼文
-   - classlist：依分類顯示文章列表，並使用 Django Paginator 實現分頁
+    - index：顯示瀏覽數前五名的熱門貼文
+    - classlist：依分類顯示文章列表，並使用 Django Paginator 實現分頁
   
   - 用戶類頁面
-   - register：處理註冊流程
-   - userblog：顯示特定使用者的文章（依時間排序）
+    - register：處理註冊流程
+    - userblog：顯示特定使用者的文章（依時間排序）
   
   - 貼文類頁面
-   - createpost：處理貼文建立邏輯，並利用 IpWare 擷取發文者 IP
-   - postdetail：根據 user id 與 slug 顯示貼文與留言內容
-    - 若為 POST 請求，則處理留言新增
-    - 並根據 IP 資料更新瀏覽統計
-   - updatepost / deletepost：處理貼文的更新與刪除                      
+    - createpost：處理貼文建立邏輯，並利用 IpWare 擷取發文者 IP
+    - postdetail：根據 user id 與 slug 顯示貼文與留言內容
+      - 若為 POST 請求，則處理留言新增
+      - 並根據 IP 資料更新瀏覽統計
+    - updatepost / deletepost：處理貼文的更新與刪除                      
  + 頁面設計 (Templates)
-  + 使用 Base.html 作為網站的基本框架
-  + 導覽列引用 Bootstrap 5 的 Navigation_bar.html
-  + 依功能建立以下頁面：
-   + 使用者註冊、登入、刪除帳號
-   + 文章新增、瀏覽、修改與刪除
+   + 使用 Base.html 作為網站的基本框架
+   + 導覽列引用 Bootstrap 5 的 Navigation_bar.html
+   + 依功能建立以下頁面：
+     + 使用者註冊、登入、刪除帳號
+     + 文章新增、瀏覽、修改與刪除
 
 ## 總結
 此模組完整實作了：
