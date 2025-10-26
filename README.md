@@ -26,58 +26,58 @@
 ## 內容說明
 專案內容說明
   + Posts 模組 (package)
-    1. models.py
-  定義三個資料表：IpAddress、Post、Comment，並使用 django.contrib.auth.models.User 作為用戶資料表。
-    - Post 模型
-      + 貼文基本欄位：title、poster、image、context、post_time、slug、classification
-        - 其中 poster 與 User 為多對一關係。
-    + IP 相關欄位：posterip 與 viewersip
-    + 方法：get_viewersip_count()
-      -回傳觀看過該貼文的唯一 IP 數量，用於統計瀏覽人次。
-    - IpAddress 模型
-      - 與 posterip 為一對一關係
-      - 與 viewersip 為多對多關係
-    - Comment 模型
-     - 與 Post、User 皆為多對一關係
+      1. models.py  
+        定義三個資料表：IpAddress、Post、Comment，並使用 django.contrib.auth.models.User 作為用戶資料表。
+      - Post 模型
+        + 貼文基本欄位：title、poster、image、context、post_time、slug、classification
+          - 其中 poster 與 User 為多對一關係。
+      + IP 相關欄位：posterip 與 viewersip
+      + 方法：get_viewersip_count()
+        -回傳觀看過該貼文的唯一 IP 數量，用於統計瀏覽人次。
+      - IpAddress 模型
+        - 與 posterip 為一對一關係
+        - 與 viewersip 為多對多關係
+      - Comment 模型
+       - 與 Post、User 皆為多對一關係
   
-  2. forms.py
-  定義四個表單類別，用於處理不同功能的輸入資料。
-  - CustomUserCreationForm
-    - 處理使用者註冊，繼承自 UserCreationForm
-    - 透過繼承與 metaclass，額外加入 Email 欄位（原始 UserCreationForm 無此欄位）
-  - PostCreationForm / PostUpdateForm
-    - 分別用於新增與更新貼文
-    - 均繼承自 forms.ModelForm，並以 metaclass 與 Post 模型連結
-  - CommentCreationForm
-    - 用於新增留言
-    - 同樣繼承自 forms.ModelForm 並與 Comment 模型連結
+      2. forms.py  
+      定義四個表單類別，用於處理不同功能的輸入資料。
+      - CustomUserCreationForm
+        - 處理使用者註冊，繼承自 UserCreationForm
+        - 透過繼承與 metaclass，額外加入 Email 欄位（原始 UserCreationForm 無此欄位）
+      - PostCreationForm / PostUpdateForm
+        - 分別用於新增與更新貼文
+        - 均繼承自 forms.ModelForm，並以 metaclass 與 Post 模型連結
+      - CommentCreationForm
+        - 用於新增留言
+        - 同樣繼承自 forms.ModelForm 並與 Comment 模型連結
     
-  3. urls.py
-  定義網站主要的 URL 結構，對應到各個 views.py 中的邏輯。
+      3. urls.py  
+      定義網站主要的 URL 結構，對應到各個 views.py 中的邏輯。
+        
+      |  路徑  | 說明  |
+      |  ----  | ----  |
+      | accounts/	| 使用者登入、登出、密碼變更與重設（不含註冊） |
+      | register/ | 使用者註冊 |
+      | createposts/ | 建立貼文 |
+      | blog/{User ID} | 使用者個人部落格頁面，可進一步操作貼文 CRUD |
   
-  |  路徑  | 說明  |
-  |  ----  | ----  |
-  | accounts/	| 使用者登入、登出、密碼變更與重設（不含註冊） |
-  | register/ | 使用者註冊 |
-  | createposts/ | 建立貼文 |
-  | blog/{User ID} | 使用者個人部落格頁面，可進一步操作貼文 CRUD |
-  
-  3. views.py
-  包含多個負責頁面邏輯的處理函式。
-  - 檢視類頁面
-    - index：顯示瀏覽數前五名的熱門貼文
-    - classlist：依分類顯示文章列表，並使用 Django Paginator 實現分頁
-  
-  - 用戶類頁面
-    - register：處理註冊流程
-    - userblog：顯示特定使用者的文章（依時間排序）
-  
-  - 貼文類頁面
-    - createpost：處理貼文建立邏輯，並利用 IpWare 擷取發文者 IP
-    - postdetail：根據 user id 與 slug 顯示貼文與留言內容
-      - 若為 POST 請求，則處理留言新增
-      - 並根據 IP 資料更新瀏覽統計
-    - updatepost / deletepost：處理貼文的更新與刪除                      
+  4. views.py  
+      包含多個負責頁面邏輯的處理函式。
+      - 檢視類頁面
+        - index：顯示瀏覽數前五名的熱門貼文
+        - classlist：依分類顯示文章列表，並使用 Django Paginator 實現分頁
+      
+      - 用戶類頁面
+        - register：處理註冊流程
+        - userblog：顯示特定使用者的文章（依時間排序）
+      
+      - 貼文類頁面
+        - createpost：處理貼文建立邏輯，並利用 IpWare 擷取發文者 IP
+        - postdetail：根據 user id 與 slug 顯示貼文與留言內容
+          - 若為 POST 請求，則處理留言新增
+          - 並根據 IP 資料更新瀏覽統計
+        - updatepost / deletepost：處理貼文的更新與刪除       
  + 頁面設計 (Templates)
    + 使用 Base.html 作為網站的基本框架
    + 導覽列引用 Bootstrap 5 的 Navigation_bar.html
